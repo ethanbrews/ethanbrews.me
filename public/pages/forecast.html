@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ethanbrews.me</title>
+		<link href="/css/main.css" rel="stylesheet" />
+		<link href="/css/glightbox.min.css" rel="stylesheet" />
+		<style>
+			main {
+				text-align: center;
+			}
+			.images-wrapper {
+				max-width: 350px;
+				max-height: 300px;
+				width: 100vw;
+				border-radius: 30px;
+				background: transparent;
+				display: inline-block;
+				margin: 0 20px 20px 0px;
+				
+			}
+			.images-wrapper img {
+				max-width:100%;
+				max-height:100%;
+				border-radius: 30px;
+			}
+			
+			@media screen and (min-width: 600px) {
+				#desc {
+					padding-left: 10vw; padding-right: 10vw;
+				}
+			}
+			
+			.glightbox {
+				cursor: pointer;
+			}
+			
+			ul > li {
+				line-height: 1.5rem;
+			}
+		</style>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		<nav>
+			<a href="/">ethanbrews.me</a>
+		</nav>
+		<main>
+			<h1>Forecast Mod Manager</h1>
+			<h4 style="margin-bottom: 30px;">Mod manager for Risk of Rain 2</h4>
+			<a class="btn" href="ms-appinstaller:?source=http://storage.ethanbrews.me/Forecast/Release/Forecast.appinstaller">Install Now on Windows 10</a>
+			<a class="btn" href="https://thunderstore.io/package/ethanbrews/Forecast_Mod_Manager/">View on Thunderstore</a>
+			<div id="desc" style="margin-top: 30px; margin-bottom: 30px;">
+				<p class="body">
+					Forecast is a fast, secure, and easy-to-use mod manager for Risk of Rain 2 mods. It allows you to quickly search through the <a href="https://thunderstore.io">thunderstore</a> and install any mods with all of their dependencies. It also has a built-in config editor and profile-sharing system to tweak the mods and share profiles with friends using a 5 digit code.<br/>
+				</p>
+			</div>
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/Code.png" />
+			</div>
+			
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/Create.png" />
+			</div>
+			
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/ConfigEdit.png" />
+			</div>
+			
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/Settings.png" />
+			</div>
+			
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/ModInfo.png" />
+			</div>
+			
+			<div class="images-wrapper">
+				<img class="floating glightbox" src="https://ethanbrews.me/assets/Forecast/Play.png" />
+			</div>
+			<p style="margin-top: 30px; margin-bottom: 10px;">Additional Links</p>
+			<ul style="margin-bottom: 60px;">
+				<li><a href="https://thunderstore.io/package/download/ethanbrews/Forecast_Mod_Manager/2.0.4/">Legacy Installer (Not Recommended)</a></li>
+				<li><a href="http://storage.ethanbrews.me/Forecast/Release/Forecast_1.1.4.0_Test/Forecast_1.1.4.0_x86_x64.cer">Publisher Certificate</a></li>
+				<li><a href="http://storage.ethanbrews.me/Forecast/Release/Forecast.appinstaller">App Installer File</a></li>
+				<li><a href="http://storage.ethanbrews.me/Forecast/Release/Forecast_1.1.4.0_Test/Forecast_1.1.4.0_x86_x64.msixbundle">Package Bundle</a></li>
+			</ul>
+		</main>
+		
+		<script src="/js/glightbox.min.js"></script>
+		<script>
+        var lightbox = GLightbox();
+        lightbox.on('open', (target) => {
+            console.log("lightbox opened");
+        });
+		</script>
+	</body>
+</html>
+  
