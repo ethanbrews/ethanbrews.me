@@ -5,7 +5,7 @@
           "icon.png", "manifest.json", "README.md"
         ],
         "file-specifiers": {
-            "ror2": ["winhttp.dll"],
+            "ror2": ["winhttp.dll", "BepInEx"],
             "bepis": ["plugins", "config"],
             "config": [""]
         }
