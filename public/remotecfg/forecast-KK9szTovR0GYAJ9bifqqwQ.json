@@ -1,0 +1,81 @@
+{
+    "version": "1.0.0",
+    "profile-installer": {
+        "ignore-files": [
+          "icon.png", "manifest.json", "README.md"
+        ],
+        "file-specifiers": {
+            "ror2": ["winhttp.dll"],
+            "bepis": ["plugins", "config"],
+            "config": [""]
+        }
+    },
+    "features": {
+        "config-editor-page": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true
+            }
+        },
+        "download-page": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true
+            }
+        },
+        "play-page": {
+            "enable": true
+        },
+        "forecast-page": {
+            "enable": true
+        },
+        "settings-page": {
+            "enable": true
+        },
+        "share-profiles-enabled": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true,
+                "feature-group-min": 80
+            }
+        },
+        "edit-profiles-enabled": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true
+            }
+        },
+        "update-profiles-enabled": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true
+            }
+        },
+        "recently-shared-pane-enabled": {
+            "enable": true,
+            "conditions": {
+                "only-in-debug": true
+            }
+        }
+    },
+    "launch-message": [
+      {
+          "guid": "{56d32932-8978-429d-a61c-eb3ee5aa05cd}",
+          "show-once": true,
+          "show-delay": 5000,
+          "show-on-app-version-only": ["1.0.0.0"],
+          "date-range": {
+              "start": "2020-01-02",
+              "end": "2020-06-05"
+          },
+          "show-every-n-launches": 0,
+          "message": {
+              "title": "Title",
+              "body": "Body",
+              "primaryButtonText": "Text",
+              "primaryButtonHref": "http://google.com",
+              "secondaryButtonText": "Close"
+          }
+      }    
+    ]
+  }
