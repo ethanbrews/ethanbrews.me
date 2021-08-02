@@ -12,16 +12,10 @@
     },
     "features": {
         "config-editor-page": {
-            "enable": true,
-            "conditions": {
-                "only-in-debug": true
-            }
+            "enable": false
         },
         "download-page": {
-            "enable": true,
-            "conditions": {
-                "only-in-debug": true
-            }
+            "enable": false
         },
         "play-page": {
             "enable": true
@@ -33,29 +27,20 @@
             "enable": true
         },
         "share-profiles-enabled": {
+            "enable": false
+        },
+        "edit-profiles-enabled": {
             "enable": true,
             "conditions": {
                 "only-in-debug": true,
                 "feature-group-min": 80
             }
         },
-        "edit-profiles-enabled": {
-            "enable": true,
-            "conditions": {
-                "only-in-debug": true
-            }
-        },
         "update-profiles-enabled": {
-            "enable": true,
-            "conditions": {
-                "only-in-debug": true
-            }
+            "enable": true
         },
         "recently-shared-pane-enabled": {
-            "enable": true,
-            "conditions": {
-                "only-in-debug": true
-            }
+            "enable": true
         }
     },
     "launch-message": [
