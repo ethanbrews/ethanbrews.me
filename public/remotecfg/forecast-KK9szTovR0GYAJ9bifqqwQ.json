@@ -18,7 +18,10 @@
             "enable": false
         },
         "play-page": {
-            "enable": true
+            "enable": true,
+            "conditions": {
+                "only-in-debug": false
+            }
         },
         "thunderstore-page": {
             "enable": true
