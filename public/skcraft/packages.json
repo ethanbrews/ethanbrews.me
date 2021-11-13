@@ -1,0 +1,12 @@
+{
+    "minimumVersion" : 1,
+    "packages" : [
+      {
+        "title" : "HDCCTV Server Pack 1",
+        "name" : "CCTV1",
+        "version" : "2021-11-13-19-15-07",
+        "location" : "cctv1.json",
+        "priority" : 0
+      }
+    ]
+  }
