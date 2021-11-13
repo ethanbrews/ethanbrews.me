@@ -5,7 +5,7 @@
         "title" : "HDCCTV Server Pack 1",
         "name" : "CCTV1",
         "version" : "2021-11-13-19-15-07",
-        "location" : "cctv1.json",
+        "location" : "http://storage.ethanbrews.me/SKCraft/packs/cctv1.json",
         "priority" : 0
       }
     ]
