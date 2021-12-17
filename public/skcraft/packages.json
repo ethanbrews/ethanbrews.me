@@ -2,6 +2,13 @@
   "minimumVersion" : 1,
   "packages" : [
     {
+      "title" : "Clipsemas",
+      "name" : "Clipsemas",
+      "version" : "2021-12-17-22-32-02",
+      "location" : "http://storage.ethanbrews.me/SKCraft/packs/clipsemas.json",
+      "priority" : 1
+    },
+    {
       "title" : "HDCCTV Server Pack 1",
       "name" : "CCTV1",
       "version" : "2021-11-14-18-01-33",
