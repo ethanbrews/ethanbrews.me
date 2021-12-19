@@ -7,17 +7,95 @@
             }
             body {
                 padding: 1rem;
+                line-height:1.3em;
+                min-width:920px;
+            }
+            .history-tl-container{
+                font-family: "Roboto",sans-serif;
+                width:100%;
+                margin:auto;
+                display:block;
+                position:relative;
+            }
+            .history-tl-container ul.tl{
+                margin:20px 0;
+                padding:0;
+                display:inline-block;
+
+            }
+            .history-tl-container ul.tl li{
+                list-style: none;
+                margin:auto;
+                margin-left:200px;
+                min-height:50px;
+                /*background: rgba(255,255,0,0.1);*/
+                border-left:1px dashed #86D6FF;
+                padding:0 0 50px 30px;
+                position:relative;
+            }
+            .history-tl-container ul.tl li:last-child{ border-left:0;}
+            .history-tl-container ul.tl li::before{
+                position: absolute;
+                left: -18px;
+                top: -5px;
+                content: " ";
+                border: 8px solid rgba(255, 255, 255, 0.74);
+                border-radius: 500%;
+                background: #258CC7;
+                height: 20px;
+                width: 20px;
+                transition: all 500ms ease-in-out;
+
+            }
+            ul.tl li .item-detail{
+                color:rgba(0,0,0,0.8);
+                font-size:12px;
+            }
+            ul.tl li .timestamp{
+                color: #8D8D8D;
+                position: absolute;
+            width:100px;
+                left: -30%;
+                text-align: right;
+                font-size: 12px;
             }
         </style>
     </head>
     <body>
-        <h1>Clipsemas Pack Released! &#x1F389;&#x1F389;</h1>
-        <p>
-            The clipsemas pack is currently running on the official server.
-            It is a custom-designed 1.18.1 modpack.
-        </p>
-        <p>
-            The HDCCTV Server Pack is no longer online. Be aware it is vulnerable to the <a href="https://en.wikipedia.org/wiki/Log4j">Log4j RCE exploit</a> and is no longer recommended for online play.
-        </p>
+
+        <div class="history-tl-container">
+            <ul class="tl">
+              <li class="tl-item" ng-repeat="item in retailer_history">
+                <div class="timestamp">
+                  19.12.21<br> 00:45
+                </div>
+                <div class="item-title">Clipsemas Patch</div>
+                <div class="item-detail">Fixed geese, ducks and updated cc:restitched.</div>
+              </li>
+              <li class="tl-item" ng-repeat="item in retailer_history">
+                <div class="timestamp">
+                  18.12.21<br> 22:00
+                </div>
+                <div class="item-title">Clipsemas Released</div>
+                <div class="item-detail">A 1.18.1 modpack designed for multiplayer. The server has switched to this pack.</div>
+              </li>
+              <li class="tl-item" ng-repeat="item in retailer_history">
+                <div class="timestamp">
+                  10.12.21<br> 10:00
+                </div>
+                <div class="item-title">HDCCTV Pack 1 Server Offline</div>
+                <div class="item-detail">The server has been taken offline to patch the recent Log4j exploit.</div>
+              </li>
+              <li class="tl-item" ng-repeat="item in retailer_history">
+                <div class="timestamp">
+                  14.11.21<br> 20:00
+                </div>
+                <div class="item-title">HDCCTV Pack 1 Released</div>
+                <div class="item-detail">This pack is a modified version of AOF4.</div>
+              </li>
+          
+            </ul>
+          
+          </div>
     </body>
 </html> 
