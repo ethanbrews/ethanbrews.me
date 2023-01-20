@@ -10,14 +10,18 @@
 			.projects-list > .panel:last-child {
 				margin-bottom: 20px;
 			}
-			.tags {
+			ul.tags {
 				margin: 10px 0px;
 			}
-			.tags span {
+			ul.tags li {
 				font-size: .86rem;
 				background-color: var(--accent);
-				padding: 3px 10px;
+				padding: 6px 10px;
 				border-radius: 5px;
+				display: inline-block;
+			}
+			ul.tags li.warn {
+				background-color: var(--warn);
 			}
 			.actions {
 				margin-top: 10px;
@@ -38,15 +42,30 @@
 			<div class="projects-list">
 				
 				<div class="panel floating">
+					<h2>Experience Mod</h2>
+					<p class="caption">Minecraft mod adding rituals based on experience and enchantments.</p>
+					<ul class="tags">
+						<li>Fabric</li>
+						<li>Minecraft Mod</li>
+						<li>1.19</li>
+						<li>Open Source</li>
+					</ul>
+					<div class="actions">
+						<a class="btn" href="https://modrinth.com/mod/experience">Download on Modrinth</a>
+						<a class="btn" href="https://github.com/ethanbrews/experience-mod">View on GitHub</a>
+					</div>
+				</div>
+
+				<div class="panel floating">
 					<h2>Forecast</h2>
 					<p class="caption">Mod manager for Risk of Rain 2</p>
-					<div class="tags">
-						<span>Windows 10</span>
-						<span>Open Source</span>
-					</div>
+					<ul class="tags">
+						<li class="warn">Archived</li>
+						<li>Windows 10</li>
+					</ul>
 					<div class="actions">
 						<a class="btn" href="/pages/forecast.html">View Page</a>
-						<a class="btn" href="ms-appinstaller:?source=http://storage.ethanbrews.me/Forecast/Release/Forecast.appinstaller">Download for Windows 10</a></div>
+						<a class="btn" href="ms-appinstaller:?source=http://storage.ethanbrews.me/Forecast/Release/Forecast.appinstaller">Download for Windows 11</a></div>
 				</div>
 				
 				<!--<div class="panel floating">
@@ -63,17 +82,18 @@
 				
 				<div class="panel floating">
 					<h2>Blockwake</h2>
-					<p class="caption">Pirate-themed 2020 Modfest entry with JSJBDEV</p>
-					<div class="tags">
-						<span>Fabric</span>
-						<span>Minecraft Mod</span>
-						<span>1.16</span>
-						<span>Modfest</span>
-					<span>Open Source</span></div>
+					<p class="caption">Pirate-themed 2020 Modfest entry with <a href="https://github.com/JSJBDEV">@JSJBDEV</a></p>
+					<ul class="tags">
+						<li class="warn">Archived</li>
+						<li>Fabric</li>
+						<li>Minecraft Mod</li>
+						<li>1.16</li>
+						<li>Modfest</li>
+						<li>Open Source</li>
+					</ul>
 					<div class="actions">
 						<a class="btn" href="https://github.com/JSJBDEV/PiratesAndPlunderers">View on GitHub</a>
 				</div>
-				
 			</div>
 		</main>
 	</body>
