@@ -1,11 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Rokkitt:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --backgroundA: #e5e7eb; /* Light neutral for a clean, professional look */
-    --backgroundB: #cfd3d9;
+    --background: #f2f2f2; /* Light neutral for a clean, professional look */
     --foreground: #2c2f33; /* Dark, muted for contrast */
-    --accent: #00d1b2; /* Neon teal for subtle pops of color */
-    --highlight: #ffcc00; /* Neon yellow for call-to-action elements */
     --shadow: #bbbbbb; /* Soft gray for shadows and borders */
     --yellow: #EDB74D;
     --red: #EB6666;
@@ -18,14 +15,11 @@
     :root { font-family: "Rokkitt", serif; }
 }
 
-@media screen {
+@media (prefers-color-scheme: dark) {
     :root {
-        --backgroundA: #1c1e26;
-        --backgroundB: #24252c;
-        --foreground: #e4e8f0; /* Light foreground for readability */
-        --accent: #00d1b2; /* Neon teal for consistency */
-        --highlight: #ffcc00; /* Neon yellow for vibrant elements */
-        --shadow: #44475a; /* Deep gray for subtle depth */
+        --background: #1c1e26;
+        --foreground: #e4e8f0;
+        --shadow: #44475a; 
         --yellow: #55421d;
         --red: #5f2b2b;
         --green: #294133;
@@ -57,9 +51,7 @@ body {
     overflow: hidden;
     position: relative;
   
-    background: radial-gradient(circle, var(--backgroundA) 30%, var(--backgroundB) 80%);
-    background-size: 400% 400%; /* Enlarges the background for smooth animation */
-    animation: blobAnimation 10s ease-in-out infinite;
+    background-color: var(--background)
       
 }
 
@@ -73,132 +65,42 @@ body {
 
 /* Content Styling */
 header {
-    text-align: center;
+    text-align: left;
     z-index: 2; /* Ensure content stays above beams and dots */
+    padding: 3rem;
+}
+
+header p {
+    max-width: 700px;
+    position: relative;
+    font-size: 1.65rem;
+    margin: 1rem 0;
+    color: var(--foreground);
 }
 
 h1 {
     font-size: 3rem;
     margin: 0 0 20px;
-    color: var(--highlight);
+    color: var(--foreground);
 }
 
-p {
-    font-size: 1.5rem;
-    margin: 0 0 30px;
+.socials {
+    transform: translateX(-1rem);
 }
 
 .socials a {
     display: inline-block;
     margin: 0 10px;
-    padding: 10px 20px;
-    background: var(--accent);
+    padding: 1rem 2rem;
     color: var(--foreground);
     text-decoration: none;
     font-size: 1rem;
     border-radius: 5px;
+    border: 3px solid var(--foreground);
 }
 
 .socials a:hover {
-    background: var(--highlight);
-    color: var(--foreground);
-}
-
-
-
-body::before,
-body::after {
-  position: absolute;
-  left: 0;
-  top: 0;
-  content: '';
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-
-  opacity: 40%;
-}
-
-body::before {
-  background: #8C8C8C;
-  filter: url(#noiseFilter);
-}
-
-
-/* Blobs */
-.blob-cont {
-  position: absolute;
-  top: 50%; /* Positions it at the vertical center */
-  left: 50%; /* Positions it at the horizontal center */
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: -2;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  right: 5em;
-}
-
-
-.blob {
-  border-radius: 100px;
-  filter: blur(60px);
-}
-
-.yellow {
-  background-color: var(--yellow);
-  position: absolute;
-  top: 200px;
-  left: 100px;
-  height: 200px;
-  width: 200px;
-  
-  animation: yellow 8s infinite ease;
-}
-
-.green {
-  background-color: var(--green);
-  position: absolute;
-  top: 80px;
-  right: -20px;
-  height: 200px;
-  width: 250px;
-  
-  animation: green 8s infinite ease;
-}
-
-.red {
-  background-color: var(--red);
-  position: absolute;
-  right: 0;
-  top: 300px;
-  height: 250px;
-  width: 200px;
-  
-  animation: red 8s infinite linear;
-}
-
-@keyframes yellow {
-  0% {top: 200px; left: 100px; transform: scale(1);}
-  30% {top: 300px; left: 150px; transform: scale(1.2);}
-  60% {top: 100px; left: 200px; transform: scale(1.3);}
-  100% {top: 200px; left: 100px; transform: scale(1);}
-}
-
-@keyframes green {
-  0% {top: 80px; right: -20px; transform: scale(1.2);}
-  30% {top: 300px; right: -20px;transform: scale(1);}
-  60% {top: 200px; right: 100px;transform: scale(1);}
-  100% {top: 80px; right: -20px; transform: scale(1.2);}
-}
-
-@keyframes red {
-  0% {top: 250px; right: 0px; transform: scale(1);}
-  30% {top: 150px; right: 150px;transform: scale(1.4);}
-  60% {top: 250px; right: 100px;transform: scale(1);}
-  100% {top: 250px; right: 0px; transform: scale(1);}
+    background: var(--foreground);
+    color: var(--background);
+    transition: color .1s, background-color .1s;
 }
