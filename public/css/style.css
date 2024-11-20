@@ -35,6 +35,21 @@
         --red: #fff;
         --green: #fff;
     }
+
+    .socials a {
+        display: block !important;
+        text-align: left !important;
+        border: none !important;
+        padding: 1rem 0px !important;
+    }
+    
+    .socials a[href*="://"]::after {
+        content: ": " attr(href);
+    }
+    
+    .socials a[data-email]:not([data-email=""])::after {
+        content: ": " attr(data-email);
+    }
 }
 
 
