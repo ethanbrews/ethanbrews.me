@@ -26,6 +26,17 @@
     }
 }
 
+@media print {
+    :root {
+        --background: #fff; /* Light neutral for a clean, professional look */
+        --foreground: #000; /* Dark, muted for contrast */
+        --shadow: #fff; /* Soft gray for shadows and borders */
+        --yellow: #fff;
+        --red: #fff;
+        --green: #fff;
+    }
+}
+
 
 @keyframes blobAnimation {
     0% {
