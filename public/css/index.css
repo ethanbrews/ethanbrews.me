@@ -1,3 +1,10 @@
+:root {
+  --base-blob-size-vh: 42vh;
+  --base-blob-size-vw: 42vw;
+  --blob-opacity: 0.6;
+  --blob-size: max(var(--base-blob-size-vh), var(--base-blob-size-vw));
+}
+
 body::before,
 body::after {
   position: absolute;
@@ -7,14 +14,12 @@ body::after {
   width: 100%;
   height: 100%;
   z-index: -1;
-
   opacity: 40%;
 }
 
 body::before {
   filter: url(#noiseFilter);
 }
-
 
 
 /* Blobs */
@@ -34,64 +39,79 @@ body::before {
     pointer-events: none;
     right: 5em;
   }
-  
-  
+
+
   .blob {
     border-radius: 100px;
     filter: blur(60px);
+    opacity: var(--blob-opacity);
   }
-  
+
   .yellow {
     background-color: var(--yellow);
     position: absolute;
     top: 20vh;
     left: 10vw;
-    height: 20%;
-    width: 20%;
-    
-    animation: yellow 14s infinite ease;
+    height: var(--blob-size);
+    width: var(--blob-size);
+    border-radius: max(50vh, 50vw);
+    animation: yellow 34s infinite ease;
   }
-  
+
   .green {
     background-color: var(--green);
     position: absolute;
     top: 8vh;
     right: -2vw;
-    height: 30%;
-    width: 25%;
-    
-    animation: green 15s infinite ease;
+    height: var(--blob-size);
+    width: var(--blob-size);
+    border-radius: max(50vh, 50vw);
+    animation: green 45s infinite ease;
   }
-  
+
   .red {
     background-color: var(--red);
     position: absolute;
     right: 0;
     top: 30vh;
-    height: 30%;
-    width: 30%;
-    
-    animation: red 20s infinite linear;
+    height: var(--blob-size);
+    width: var(--blob-size);
+    border-radius: max(50vh, 50vw);
+    animation: red 36s infinite linear;
   }
-  
-  @keyframes yellow {
-    0% {top: 20vh; left: 10vw; transform: scale(1);}
-    30% {top: 60vh; left: 15vw; transform: scale(1.2);}
-    60% {top: 30vh; left: 25vw; transform: scale(1.3);}
-    100% {top: 20vh; left: 10vw; transform: scale(1);}
-  }
-  
-  @keyframes green {
-    0% {top: 8vh; right: -2vw; transform: scale(1.2);}
-    30% {top: 30vh; right: -12vw;transform: scale(1);}
-    60% {top: 20vh; right: -14vw;transform: scale(1);}
-    100% {top: 8vh; right: -2vw; transform: scale(1.2);}
-  }
-  
-  @keyframes red {
-    0% {top: 80vh; right: 15vw; transform: scale(1);}
-    30% {top: 50vh; right: 50vw;transform: scale(1.4);}
-    60% {top: 60vh; right: 40vw;transform: scale(1);}
-    100% {top: 80vh; right: 15vw; transform: scale(1);}
-  }
-  
+
+
+@keyframes yellow {
+  0% { top: 20vh; left: 10vw; transform: scale(1); }
+  15% { top: 25vh; left: 12vw; transform: scale(1.1); }
+  30% { top: 35vh; left: 15vw; transform: scale(1.2); }
+  45% { top: 45vh; left: 18vw; transform: scale(1.1); }
+  60% { top: 40vh; left: 25vw; transform: scale(1.3); }
+  75% { top: 30vh; left: 20vw; transform: scale(1.2); }
+  90% { top: 25vh; left: 12vw; transform: scale(1.1); }
+  100% { top: 20vh; left: 10vw; transform: scale(1); }
+}
+
+@keyframes green {
+  0% { top: 8vh; right: -2vw; transform: scale(1.2); }
+  15% { top: 12vh; right: -4vw; transform: scale(1.1); }
+  30% { top: 20vh; right: -8vw; transform: scale(1); }
+  45% { top: 25vh; right: -10vw; transform: scale(1.1); }
+  60% { top: 30vh; right: -14vw; transform: scale(1.2); }
+  75% { top: 20vh; right: -10vw; transform: scale(1); }
+  90% { top: 12vh; right: -6vw; transform: scale(1.1); }
+  100% { top: 8vh; right: -2vw; transform: scale(1.2); }
+}
+
+@keyframes red {
+  0% { top: 80vh; right: 15vw; transform: scale(1); }
+  15% { top: 75vh; right: 18vw; transform: scale(1.1); }
+  30% { top: 65vh; right: 25vw; transform: scale(1.3); }
+  45% { top: 55vh; right: 40vw; transform: scale(1.2); }
+  60% { top: 60vh; right: 35vw; transform: scale(1); }
+  75% { top: 70vh; right: 25vw; transform: scale(1.1); }
+  90% { top: 75vh; right: 18vw; transform: scale(1.2); }
+  100% { top: 80vh; right: 15vw; transform: scale(1); }
+}
+
+
