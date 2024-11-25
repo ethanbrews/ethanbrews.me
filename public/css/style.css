@@ -20,9 +20,9 @@
         --background: #1c1e26;
         --foreground: #e4e8f0;
         --shadow: #44475a; 
-        --yellow: #55421d;
-        --red: #5f2b2b;
-        --green: #294133;
+        --yellow: #a37656;
+        --red: #b02d2d;
+        --green: #155b32;
     }
 }
 
@@ -76,8 +76,7 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
-  
-    background-color: var(--background)
+    background-color: var(--background);
       
 }
 
