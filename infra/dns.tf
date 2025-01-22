@@ -1,9 +1,3 @@
-variable "zone_id" {
-  type = string
-  sensitive = true
-  description = "Zone Identifier for ethanbrews.me"
-}
-
 // Website
 
 // Hosted using pages configuration
@@ -39,7 +33,7 @@ resource "cloudflare_dns_record" "vps_ipv6" {
 
 // Mail
 
-resource "cloudflare_dns_record" "autodiscover" {
+resource "cloudflare_dns_record" "outlook_autodiscover" {
     zone_id = "${var.zone_id}"
     name    = "autodiscover"
     content = "autodiscover.outlook.com"
@@ -48,7 +42,7 @@ resource "cloudflare_dns_record" "autodiscover" {
     ttl     = 1
 }
 
-resource "cloudflare_dns_record" "mail_protect" {
+resource "cloudflare_dns_record" "outlook_mail_protect" {
     zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
     content = "ethanbrews-me.mail.protection.outlook.com"
@@ -59,7 +53,7 @@ resource "cloudflare_dns_record" "mail_protect" {
 
 // Domain Verification
 
-resource "cloudflare_dns_record" "ms_verify" {
+resource "cloudflare_dns_record" "microsoft_verify" {
     zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
     content = "MS=3D721FE97631AD845F458405F81F8E550EABCE0D"
