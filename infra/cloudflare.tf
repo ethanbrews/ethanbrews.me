@@ -10,18 +10,6 @@ variable "zone_id" {
   description = "Zone Identifier for ethanbrews.me"
 }
 
-variable "state_bucket_access_key" {
-  type = string
-  sensitive = true
-  description = "Access key for the r2 bucket used as an s3 backend"
-}
-
-variable "state_bucket_secret_key" {
-  type = string
-  sensitive = true
-  description = "Secret access key for the r2 bucket used as an s3 backend"
-}
-
 terraform {
   required_providers {
     cloudflare = {
