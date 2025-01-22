@@ -1,12 +1,6 @@
-variable "cloudflare_email" {
+variable "cloudflare_token" {
   type        = string
-  description = "Email Address for Cloudflare"
-  sensitive = true
-}
-
-variable "cloudflare_key" {
-  type        = string
-  description = "Key for Cloudflare"
+  description = "Cloudflare Scoped Access Token"
   sensitive = true
 }
 
@@ -20,6 +14,5 @@ terraform {
 }
 
 provider "cloudflare" {
-  email = var.cloudflare_email
-  api_key = var.cloudflare_key
+  api_token = var.cloudflare_token
 }
