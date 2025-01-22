@@ -1,7 +1,7 @@
-
-
-variable "domain" {
-  default = "ethanbrews.me"
+variable "zone_id" {
+  type = string
+  sensitive = true
+  description = "Zone Identifier for ethanbrews.me"
 }
 
 // Website
@@ -9,57 +9,63 @@ variable "domain" {
 // Hosted using pages configuration
 
 resource "cloudflare_record" "www" {
-    domain  = "${var.domain}"
+    zone_id = "${var.zone_id}"
     name    = "www"
-    value   = "ethanbrews.me"
+    content = "ethanbrews.me"
     type    = "CNAME"
     proxied = false
+    ttl     = 1
 }
 
 // VPS
 
 resource "cloudflare_record" "vps_ipv4" {
-  domain  = "${var.domain}"
+  zone_id = "${var.zone_id}"
   name    = "vps"
-  value   = "172.236.8.144"
+  content = "172.236.8.144"
   type    = "A"
   proxied = false
+  ttl     = 1
 }
 
 resource "cloudflare_record" "vps_ipv6" {
-  domain  = "${var.domain}"
+  zone_id = "${var.zone_id}"
   name    = "vps"
-  value   = "2600:3c13::f03c:95ff:fe3e:714a"
+  content = "2600:3c13::f03c:95ff:fe3e:714a"
   type    = "AAAA"
   proxied = false
+  ttl     = 1
 }
 
 // Mail
 
 resource "cloudflare_record" "autodiscover" {
-    domain  = "${var.domain}"
+    zone_id = "${var.zone_id}"
     name    = "autodiscover"
-    value   = "autodiscover.outlook.com"
+    content = "autodiscover.outlook.com"
     type    = "CNAME"
     proxied = false
+    ttl     = 1
 }
 
 resource "cloudflare_record" "mail_protect" {
-    domain  = "${var.domain}"
+    zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
-    value   = "ethanbrews-me.mail.protection.outlook.com"
+    content = "ethanbrews-me.mail.protection.outlook.com"
     type    = "MX"
     proxied = false
+    ttl     = 1
 }
 
 // Domain Verification
 
 resource "cloudflare_record" "ms_verify" {
-    domain  = "${var.domain}"
+    zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
-    value   = "MS=3D721FE97631AD845F458405F81F8E550EABCE0D"
+    content = "MS=3D721FE97631AD845F458405F81F8E550EABCE0D"
     type    = "TXT"
     proxied = false
+    ttl     = 1
 }
 
 
