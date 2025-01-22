@@ -18,7 +18,7 @@ resource "cloudflare_record" "www" {
 
 // VPS
 
-resource "cloudflare_record" "vps" {
+resource "cloudflare_record" "vps_ipv4" {
   domain  = "${var.domain}"
   name    = "vps"
   value   = "172.236.8.144"
@@ -26,7 +26,7 @@ resource "cloudflare_record" "vps" {
   proxied = false
 }
 
-resource "cloudflare_record" "vps" {
+resource "cloudflare_record" "vps_ipv6" {
   domain  = "${var.domain}"
   name    = "vps"
   value   = "2600:3c13::f03c:95ff:fe3e:714a"
