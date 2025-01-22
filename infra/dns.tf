@@ -31,6 +31,15 @@ resource "cloudflare_dns_record" "vps_ipv6" {
   ttl     = 1
 }
 
+resource "cloudflare_dns_record" "docker_registry" {
+  zone_id = "${var.zone_id}"
+  name    = "docker"
+  content = "vps.ethanbrews.me"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 // Mail
 
 resource "cloudflare_dns_record" "outlook_autodiscover" {

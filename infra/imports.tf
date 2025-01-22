@@ -27,3 +27,8 @@ import {
     to = cloudflare_dns_record.microsoft_verify
     id = "${var.zone_id}/37ee9696a1431c7d79e82922b0c8dc29"
 }
+
+import {
+    to = cloudflare_dns_record.docker_registry
+    id = "${var.zone_id}/7e327fc5f578f5bfc311091b8036fa87"
+}
