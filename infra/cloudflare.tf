@@ -10,7 +10,16 @@ variable "cloudflare_key" {
   sensitive = true
 }
 
+terraform {
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5"
+    }
+  }
+}
+
 provider "cloudflare" {
   email = var.cloudflare_email
-  token = var.cloudflare_key
+  api_token = var.cloudflare_key
 }
