@@ -8,7 +8,7 @@ variable "zone_id" {
 
 // Hosted using pages configuration
 
-resource "cloudflare_record" "www" {
+resource "cloudflare_dns_record" "www" {
     zone_id = "${var.zone_id}"
     name    = "www"
     content = "ethanbrews.me"
@@ -19,7 +19,7 @@ resource "cloudflare_record" "www" {
 
 // VPS
 
-resource "cloudflare_record" "vps_ipv4" {
+resource "cloudflare_dns_record" "vps_ipv4" {
   zone_id = "${var.zone_id}"
   name    = "vps"
   content = "172.236.8.144"
@@ -28,7 +28,7 @@ resource "cloudflare_record" "vps_ipv4" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "vps_ipv6" {
+resource "cloudflare_dns_record" "vps_ipv6" {
   zone_id = "${var.zone_id}"
   name    = "vps"
   content = "2600:3c13::f03c:95ff:fe3e:714a"
@@ -39,7 +39,7 @@ resource "cloudflare_record" "vps_ipv6" {
 
 // Mail
 
-resource "cloudflare_record" "autodiscover" {
+resource "cloudflare_dns_record" "autodiscover" {
     zone_id = "${var.zone_id}"
     name    = "autodiscover"
     content = "autodiscover.outlook.com"
@@ -48,7 +48,7 @@ resource "cloudflare_record" "autodiscover" {
     ttl     = 1
 }
 
-resource "cloudflare_record" "mail_protect" {
+resource "cloudflare_dns_record" "mail_protect" {
     zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
     content = "ethanbrews-me.mail.protection.outlook.com"
@@ -59,7 +59,7 @@ resource "cloudflare_record" "mail_protect" {
 
 // Domain Verification
 
-resource "cloudflare_record" "ms_verify" {
+resource "cloudflare_dns_record" "ms_verify" {
     zone_id = "${var.zone_id}"
     name    = "ethanbrews.me"
     content = "MS=3D721FE97631AD845F458405F81F8E550EABCE0D"
