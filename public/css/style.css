@@ -20,9 +20,35 @@
         --background: #1c1e26;
         --foreground: #e4e8f0;
         --shadow: #44475a; 
-        --yellow: #55421d;
-        --red: #5f2b2b;
-        --green: #294133;
+        --yellow: #a37656;
+        --red: #b02d2d;
+        --green: #155b32;
+    }
+}
+
+@media print {
+    :root {
+        --background: #fff; /* Light neutral for a clean, professional look */
+        --foreground: #000; /* Dark, muted for contrast */
+        --shadow: #fff; /* Soft gray for shadows and borders */
+        --yellow: #fff;
+        --red: #fff;
+        --green: #fff;
+    }
+
+    .socials a {
+        display: block !important;
+        text-align: left !important;
+        border: none !important;
+        padding: 1rem 0px !important;
+    }
+    
+    .socials a[href*="://"]::after {
+        content: ": " attr(href);
+    }
+    
+    .socials a[data-email]:not([data-email=""])::after {
+        content: ": " attr(data-email);
     }
 }
 
@@ -50,8 +76,7 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
-  
-    background-color: var(--background)
+    background-color: var(--background);
       
 }
 
