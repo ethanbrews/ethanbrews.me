@@ -78,4 +78,24 @@ resource "cloudflare_record" "microsoft_verify" {
     ttl     = 1
 }
 
+// SMTP2GO
 
+resource "cloudflare_record" "smtp2go_return" {
+    zone_id = "${var.zone_id}"
+    name    = "em782368"
+    content = "return.smtp2go.net"
+    comment = "Smtp2Go return"
+    type    = "CNAME"
+    proxied = false
+    ttl     = 1
+}
+
+resource "cloudflare_record" "smtp2go_dkim" {
+    zone_id = "${var.zone_id}"
+    name    = "s782368._domainkey"
+    content = "dkim.smtp2go.net"
+    comment = "Smtp2Go domain key"
+    type    = "CNAME"
+    proxied = false
+    ttl     = 1
+}
