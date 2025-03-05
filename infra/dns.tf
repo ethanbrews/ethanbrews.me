@@ -54,6 +54,15 @@ resource "cloudflare_record" "auth" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "headscale" {
+  zone_id = "${var.zone_id}"
+  name    = "brewsnet"
+  content = "vps.ethanbrews.me"
+  comment = "Brewsnet (headscale)"
+  type    = "CNAME"
+  proxied = true
+  ttl     = 1
+}
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
