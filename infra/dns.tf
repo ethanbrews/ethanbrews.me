@@ -44,6 +44,16 @@ resource "cloudflare_record" "docker_registry" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "auth" {
+  zone_id = "${var.zone_id}"
+  name    = "auth"
+  content = "vps.ethanbrews.me"
+  comment = "Authentik"
+  type    = "CNAME"
+  proxied = true
+  ttl     = 1
+}
+
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
