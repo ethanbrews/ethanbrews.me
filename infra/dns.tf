@@ -50,7 +50,7 @@ resource "cloudflare_record" "auth" {
   content = "vps.ethanbrews.me"
   comment = "Authentik"
   type    = "CNAME"
-  proxied = true
+  proxied = false
   ttl     = 1
 }
 
