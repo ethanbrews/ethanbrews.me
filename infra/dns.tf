@@ -56,7 +56,7 @@ resource "cloudflare_record" "auth" {
 
 resource "cloudflare_record" "headscale" {
   zone_id = "${var.zone_id}"
-  name    = "brewsnet"
+  name    = "vpn"
   content = "vps.ethanbrews.me"
   comment = "Brewsnet (headscale)"
   type    = "CNAME"
