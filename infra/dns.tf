@@ -50,10 +50,19 @@ resource "cloudflare_record" "auth" {
   content = "vps.ethanbrews.me"
   comment = "Authentik"
   type    = "CNAME"
-  proxied = true
+  proxied = false
   ttl     = 1
 }
 
+resource "cloudflare_record" "headscale" {
+  zone_id = "${var.zone_id}"
+  name    = "vpn"
+  content = "vps.ethanbrews.me"
+  comment = "Brewsnet (headscale)"
+  type    = "CNAME"
+  proxied = true
+  ttl     = 1
+}
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
