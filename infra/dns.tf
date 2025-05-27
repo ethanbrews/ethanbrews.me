@@ -36,7 +36,7 @@ resource "cloudflare_record" "vps_ipv6" {
 
 resource "cloudflare_record" "docker_registry" {
   zone_id = "${var.zone_id}"
-  name    = "docker"
+  name    = "registry"
   content = "vps.ethanbrews.me"
   comment = "Docker registry"
   type    = "CNAME"
@@ -60,7 +60,17 @@ resource "cloudflare_record" "headscale" {
   content = "vps.ethanbrews.me"
   comment = "Brewsnet (headscale)"
   type    = "CNAME"
-  proxied = true
+  proxied = false
+  ttl     = 1
+}
+
+resource "cloudflare_record" "home" {
+  zone_id = "${var.zone_id}"
+  name    = "home"
+  content = "vps.ethanbrews.me"
+  comment = "Brewsnet (headscale)"
+  type    = "CNAME"
+  proxied = false
   ttl     = 1
 }
 // Mail
