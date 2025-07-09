@@ -128,3 +128,15 @@ resource "cloudflare_record" "smtp2go_dkim" {
     proxied = false
     ttl     = 1
 }
+
+// Minecraft server
+
+resource "cloudflare_record" "minecraft_stone" {
+    zone_id = "${var.zone_id}"
+    name    = "stoneserver.ethanbrews.me"
+    content = "80.5.130.76"
+    comment = "James minecraft server"
+    type    = "A"
+    proxied = false
+    ttl     = 1
+}
