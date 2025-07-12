@@ -140,3 +140,13 @@ resource "cloudflare_record" "minecraft_stone" {
     proxied = false
     ttl     = 1
 }
+
+resource "cloudflare_record" "minecraft_main" {
+    zone_id = "${var.zone_id}"
+    name    = "mc.ethanbrews.me"
+    content = "80.5.130.76"
+    comment = "Main minecraft server"
+    type    = "A"
+    proxied = false
+    ttl     = 1
+}
