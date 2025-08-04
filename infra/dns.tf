@@ -17,7 +17,7 @@ resource "cloudflare_record" "www" {
 resource "cloudflare_record" "vps_ipv4" {
   zone_id = "${var.zone_id}"
   name    = "vps"
-  content = "172.236.8.144"
+  content = "188.34.200.221"
   comment = "Linode VPS IPv4"
   type    = "A"
   proxied = false
@@ -27,7 +27,7 @@ resource "cloudflare_record" "vps_ipv4" {
 resource "cloudflare_record" "vps_ipv6" {
   zone_id = "${var.zone_id}"
   name    = "vps"
-  content = "2600:3c13::f03c:95ff:fe3e:714a"
+  content = "2a01:4f8:1c1a:a0ba::1"
   comment = "Linode VPS IPv6"
   type    = "AAAA"
   proxied = false
