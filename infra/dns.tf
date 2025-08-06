@@ -44,11 +44,21 @@ resource "cloudflare_record" "docker_registry" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "grafana_vps" {
+  zone_id = "${var.zone_id}"
+  name    = "grafana"
+  content = "vps.ethanbrews.me"
+  comment = "Grafana (VPN protected)"
+  type    = "CNAME"
+  proxied = true
+  ttl     = 1
+}
+
 resource "cloudflare_record" "auth" {
   zone_id = "${var.zone_id}"
   name    = "auth"
   content = "vps.ethanbrews.me"
-  comment = "Authentik"
+  comment = "Pocket ID"
   type    = "CNAME"
   proxied = false
   ttl     = 1
