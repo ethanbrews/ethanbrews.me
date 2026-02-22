@@ -74,6 +74,17 @@ resource "cloudflare_record" "mas" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "turn" {
+  zone_id = "${var.zone_id}"
+  name    = "turn"
+  content = "vps.ethanbrews.me"
+  comment = "Element Turn"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
+
 resource "cloudflare_record" "matrix" {
   zone_id = "${var.zone_id}"
   name    = "matrix"
