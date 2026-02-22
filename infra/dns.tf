@@ -64,6 +64,26 @@ resource "cloudflare_record" "headscale" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "mas" {
+  zone_id = "${var.zone_id}"
+  name    = "mas"
+  content = "vps.ethanbrews.me"
+  comment = "Element MAS"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
+resource "cloudflare_record" "matrix" {
+  zone_id = "${var.zone_id}"
+  name    = "matrix"
+  content = "vps.ethanbrews.me"
+  comment = "Element Matrix"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 resource "cloudflare_record" "home" {
   zone_id = "${var.zone_id}"
   name    = "home"
