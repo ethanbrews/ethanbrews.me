@@ -84,6 +84,25 @@ resource "cloudflare_record" "turn" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "livekitjwt" {
+  zone_id = "${var.zone_id}"
+  name    = "livekit-jwt"
+  content = "vps.ethanbrews.me"
+  comment = "Element LiveKit JWT"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
+resource "cloudflare_record" "livekit" {
+  zone_id = "${var.zone_id}"
+  name    = "livekit"
+  content = "vps.ethanbrews.me"
+  comment = "Element LiveKit"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
 
 resource "cloudflare_record" "matrix" {
   zone_id = "${var.zone_id}"
