@@ -5,7 +5,7 @@
   "org.matrix.msc4143.rtc_foci": [
     {
       "type": "livekit",
-      "livekit_service_url": "wss://livekit.ethanbrews.me"
+      "livekit_service_url": "https://livekit.ethanbrews.me/livekit/jwt"
     }
   ]
 }
