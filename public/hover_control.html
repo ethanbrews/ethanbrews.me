@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hover Control v3 – PDA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg:    #0a0e14;
+    --panel: #0f1520;
+    --border:#1e3a5f;
+    --glow:  #00c8ff;
+    --glow2: #00ff9d;
+    --glow3: #ff6b35;
+    --glow4: #f0c040;
+    --glow5: #dd44ff;
+    --text:  #c8dff0;
+    --dim:   #4a6a8a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    padding: 20px 24px 40px;
+    overflow-x: auto;
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: 0.2em;
+    color: var(--glow);
+    text-shadow: 0 0 18px var(--glow);
+    margin-bottom: 3px;
+  }
+  .subtitle {
+    font-size: 0.68rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+
+  /* ── Two-row layout ─────────────────────────────── */
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    border-bottom: 1px solid #1a2a3a;
+    padding-bottom: 5px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .pre-launch {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    padding: 16px 18px 18px;
+    border: 1px solid #1a2a3a;
+    border-radius: 8px;
+    background: rgba(0,20,40,0.3);
+  }
+
+  /* ── SVG canvas for wiring diagram ─────────────── */
+  .canvas-wrap {
+    position: relative;
+    width: 1080px;
+    height: 720px;
+  }
+
+  svg.wires {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── Formula strip (below canvas) ──────────────── */
+  .formula-strip {
+    width: 1080px;
+    margin-top: 18px;
+    background: rgba(12,18,28,0.95);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 20px;
+    display: flex;
+    gap: 32px;
+    font-size: 0.65rem;
+    color: var(--dim);
+    flex-wrap: wrap;
+  }
+  .formula-strip .f-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.52rem;
+    color: var(--glow);
+    letter-spacing: 0.15em;
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  .formula-strip code { color: var(--glow4); }
+  .formula-strip .p   { color: var(--glow2); }
+  .formula-strip .d   { color: var(--glow); }
+  .formula-strip .a   { color: var(--glow5); }
+  .formula-strip .note { color: #2a4a6a; font-size: 0.6rem; }
+
+  /* ── Brick base ─────────────────────────────────── */
+  .brick {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 13px;
+    box-shadow: 0 0 10px rgba(0,80,160,0.1), inset 0 0 16px rgba(0,0,0,0.4);
+  }
+
+  /* inline bricks (pre-launch row) */
+  .brick.inline { position: relative; min-width: 140px; }
+
+  /* positioned bricks (canvas) */
+  .brick.pos { position: absolute; }
+
+  .brick-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .brick-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 2px 0;
+  }
+  .port {
+    font-size: 0.56rem;
+    color: var(--dim);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .note {
+    font-size: 0.54rem;
+    color: #3a5a7a;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  /* Colour variants */
+  .brick.sensor .brick-label  { color: var(--glow); }
+  .brick.sensor .brick-value  { color: var(--glow);  text-shadow: 0 0 10px var(--glow); }
+  .brick.sensor { border-color: #1a4060; }
+
+  .brick.input-b .brick-label { color: var(--glow2); }
+  .brick.input-b .brick-value { color: var(--glow2); text-shadow: 0 0 10px var(--glow2); }
+  .brick.input-b { border-color: #1a5040; }
+
+  .brick.const .brick-label   { color: #e0a020; }
+  .brick.const .brick-value   { color: #e0a020; text-shadow: 0 0 8px #c08010; }
+  .brick.const { border-color: #4a3a10; background: #100e08; }
+
+  .brick.math .brick-label    { color: var(--glow4); }
+  .brick.math .brick-value    { color: var(--glow4); text-shadow: 0 0 8px var(--glow4); font-size: 1.4rem; }
+  .brick.math { border-color: #3a2e10; }
+
+  .brick.diff .brick-label    { color: var(--glow5); }
+  .brick.diff .brick-value    { color: var(--glow5); text-shadow: 0 0 10px var(--glow5); }
+  .brick.diff { border-color: #3a1050; }
+
+  .brick.clamp .brick-label   { color: #a060e0; }
+  .brick.clamp .brick-value   { color: #a060e0; text-shadow: 0 0 10px #a060e0; }
+  .brick.clamp { border-color: #2a1a4a; }
+
+  .brick.output .brick-label  { color: var(--glow3); }
+  .brick.output .brick-value  { color: var(--glow3); text-shadow: 0 0 14px var(--glow3); font-size: 1.4rem; }
+  .brick.output { border-color: #5a2a10; }
+
+  /* Fan bar */
+  .fan-bar-wrap {
+    margin-top: 6px; height: 6px;
+    background: #111; border-radius: 3px;
+    overflow: hidden; border: 1px solid #3a1a0a;
+  }
+  .fan-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--glow3), #ffaa00);
+    border-radius: 3px;
+    transition: width 0.25s ease;
+    box-shadow: 0 0 7px var(--glow3);
+  }
+
+  /* Sliders */
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%; height: 4px;
+    background: #1a3a5a; border-radius: 2px;
+    outline: none; margin-top: 7px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--glow2); box-shadow: 0 0 6px var(--glow2); cursor: pointer;
+  }
+
+  /* Number inputs for constants */
+  input[type=number] {
+    background: #0a0c10;
+    border: 1px solid #3a2a08;
+    border-radius: 3px;
+    color: #e0a020;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    width: 100%;
+    padding: 3px 6px;
+    margin-top: 6px;
+    outline: none;
+    text-align: center;
+  }
+  input[type=number]:focus { border-color: #aa7020; box-shadow: 0 0 6px #6a4010; }
+
+  .lock-badge {
+    display: inline-block;
+    font-size: 0.48rem;
+    background: #2a1a04;
+    border: 1px solid #6a4010;
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: #aa7030;
+    letter-spacing: 0.1em;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* Annotations */
+  .annot {
+    position: absolute;
+    font-size: 0.54rem;
+    color: var(--dim);
+    background: rgba(10,14,20,0.9);
+    padding: 2px 5px; border-radius: 3px;
+    pointer-events: none;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>HOVER CONTROL v3 — PDA CONTROLLER</h1>
+<p class="subtitle">proportional + derivative + acceleration &nbsp;/&nbsp; approximately up</p>
+
+<!-- ═══ PRE-LAUNCH: CONSTANT BRICKS ═══════════════════════════════════ -->
+<div class="pre-launch" id="pre-launch">
+  <div style="width:100%"><div class="section-label">⚙ Pre-launch constants — set before flight, locked on launch</div></div>
+
+  <div class="brick const inline" id="b-kp">
+    <div class="brick-label">Const: Kp <span class="lock-badge">PRE-LAUNCH</span></div>
+    <div class="brick-value" id="v-kp">0.0010</div>
+    <div class="port"><span>OUT →</span><span>proportional gain</span></div>
+    <input type="number" id="in-kp" value="0.001" step="0.0001" min="0" max="1">
+  </div>
+
+  <div class="brick const inline" id="b-kd">
+    <div class="brick-label">Const: Kd <span class="lock-badge">PRE-LAUNCH</span></div>
+    <div class="brick-value" id="v-kd">0.150</div>
+    <div class="port"><span>OUT →</span><span>velocity damping</span></div>
+    <input type="number" id="in-kd" value="0.15" step="0.01" min="-2" max="2">
+  </div>
+
+  <div class="brick const inline" id="b-ka">
+    <div class="brick-label">Const: Ka <span class="lock-badge">PRE-LAUNCH</span></div>
+    <div class="brick-value" id="v-ka">0.600</div>
+    <div class="port"><span>OUT →</span><span>accel anticipation</span></div>
+    <input type="number" id="in-ka" value="0.6" step="0.05" min="-5" max="5">
+  </div>
+
+  <div style="display:flex;align-items:flex-end;margin-left:auto">
+    <button id="btn-launch" onclick="launch()" style="
+      font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;
+      background:#0a1a0a;border:1px solid #2a6a2a;color:#00ff9d;
+      padding:8px 18px;border-radius:4px;cursor:pointer;
+      box-shadow:0 0 10px rgba(0,200,80,0.15);
+    ">▶ LAUNCH</button>
+    <button id="btn-reset" onclick="reset()" style="
+      font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;
+      background:#0a0a0a;border:1px solid #3a2a2a;color:#888;
+      padding:8px 14px;border-radius:4px;cursor:pointer;margin-left:8px;
+    ">✕ RESET</button>
+  </div>
+</div>
+
+<!-- ═══ WIRING DIAGRAM ════════════════════════════════════════════════ -->
+<div class="canvas-wrap" id="canvas">
+
+  <!-- Column 1: Sensors & inputs (x=20) -->
+  <div class="brick sensor pos" id="b-target" style="left:20px;top:30px;width:155px">
+    <div class="brick-label">Target Height</div>
+    <div class="brick-value" id="v-target">500</div>
+    <div class="port"><span>OUT →</span><span>m</span></div>
+    <input type="range" id="sl-target" min="0" max="1000" value="500">
+  </div>
+
+  <div class="brick sensor pos" id="b-dist" style="left:20px;top:230px;width:155px">
+    <div class="brick-label">Distance Meter</div>
+    <div class="brick-value" id="v-dist">500</div>
+    <div class="port"><span>OUT →</span><span>0–1000 m</span></div>
+    <input type="range" id="sl-dist" min="0" max="1000" value="500">
+  </div>
+
+  <div class="brick sensor pos" id="b-vel" style="left:20px;top:450px;width:155px">
+    <div class="brick-label">Velocity Meter</div>
+    <div class="brick-value" id="v-vel">0</div>
+    <div class="port"><span>OUT →</span><span>↓ = +</span></div>
+    <input type="range" id="sl-vel" min="-50" max="50" value="0">
+  </div>
+
+  <!-- Column 2: SUB + DIFF (x=240) -->
+  <div class="brick math pos" id="b-sub" style="left:240px;top:110px;width:125px">
+    <div class="brick-label">SUB</div>
+    <div class="brick-value">−</div>
+    <div class="port"><span>A − B</span></div>
+    <div class="note">error = target − dist</div>
+  </div>
+
+  <div class="brick diff pos" id="b-diff" style="left:240px;top:450px;width:155px">
+    <div class="brick-label">Differential Δv/Δt</div>
+    <div class="brick-value" id="v-acc">0.0</div>
+    <div class="port"><span>IN: vel</span><span>OUT: accel</span></div>
+    <div class="note">simulated input below</div>
+    <input type="range" id="sl-acc" min="-20" max="20" value="0" style="margin-top:5px">
+  </div>
+
+  <!-- Column 3: MUL bricks (x=440) -->
+  <div class="brick math pos" id="b-mulp" style="left:440px;top:30px;width:130px">
+    <div class="brick-label">MUL</div>
+    <div class="brick-value">×</div>
+    <div class="port"><span>error × Kp</span></div>
+    <div class="note" style="color:#aaa">P = <span id="pval">0.000</span></div>
+  </div>
+
+  <div class="brick math pos" id="b-muld" style="left:440px;top:280px;width:130px">
+    <div class="brick-label">MUL</div>
+    <div class="brick-value">×</div>
+    <div class="port"><span>vel × Kd</span></div>
+    <div class="note" style="color:#aaa">D = <span id="dval">0.000</span></div>
+  </div>
+
+  <div class="brick math pos" id="b-mula" style="left:440px;top:530px;width:130px">
+    <div class="brick-label">MUL</div>
+    <div class="brick-value">×</div>
+    <div class="port"><span>accel × Ka</span></div>
+    <div class="note" style="color:#aaa">A = <span id="aval">0.000</span></div>
+  </div>
+
+  <!-- Column 4: ADD bricks (x=650) -->
+  <div class="brick math pos" id="b-add1" style="left:650px;top:150px;width:120px">
+    <div class="brick-label">ADD</div>
+    <div class="brick-value">+</div>
+    <div class="port"><span>P + D</span></div>
+    <div class="note" style="color:#aaa">pd = <span id="pdval">0.000</span></div>
+  </div>
+
+  <div class="brick math pos" id="b-add2" style="left:650px;top:430px;width:120px">
+    <div class="brick-label">ADD</div>
+    <div class="brick-value">+</div>
+    <div class="port"><span>PD + A</span></div>
+    <div class="note" style="color:#aaa">raw = <span id="rawval">0.000</span></div>
+  </div>
+
+  <!-- Column 5: Clamp + Fan (x=860) -->
+  <div class="brick clamp pos" id="b-clamp" style="left:860px;top:250px;width:150px">
+    <div class="brick-label">CLAMP 0 → 1</div>
+    <div class="brick-value" id="v-clamp">0.00</div>
+    <div class="port"><span>max(0, min(1, x))</span></div>
+  </div>
+
+  <div class="brick output pos" id="b-fan" style="left:860px;top:490px;width:150px">
+    <div class="brick-label">Upward Fan</div>
+    <div class="brick-value" id="v-fan">0.00</div>
+    <div class="port"><span>thrust</span><span>0 – 1</span></div>
+    <div class="fan-bar-wrap"><div class="fan-bar" id="fan-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Annotations -->
+  <div class="annot" style="left:248px;top:99px">A = target</div>
+  <div class="annot" style="left:248px;top:207px">B = dist</div>
+
+  <svg class="wires" id="wires"></svg>
+</div>
+
+<!-- ═══ FORMULA STRIP ════════════════════════════════════════════════ -->
+<div class="formula-strip">
+  <div class="f-title">PDA CONTROL LOGIC</div>
+  <div><code>error</code> = target − distance</div>
+  <div><span class="p">P</span> = error × <code>Kp</code> &nbsp;(+, pulls toward target)</div>
+  <div><span class="d">D</span> = velocity × <code>Kd</code> &nbsp;(+, opposes motion in both directions)</div>
+  <div><span class="a">A</span> = accel × <code>Ka</code> &nbsp;(+, anticipates velocity buildup)</div>
+  <div><code>raw</code> = P + D + A</div>
+  <div>fan = clamp(<code>raw</code>, 0, 1)</div>
+  <div class="note">D damps velocity overshoot &nbsp;·&nbsp; A anticipates thrust lag &nbsp;·&nbsp; fans off when at target and still</div>
+</div>
+
+<script>
+// ── State ────────────────────────────────────────────────
+let Kp = 0.001, Kd = 0.15, Ka = 0.6;
+let launched = false;
+
+function gv(id)   { return parseFloat(document.getElementById(id).value); }
+function st(id,v) { document.getElementById(id).textContent = v; }
+
+function update() {
+  const target = gv('sl-target');
+  const dist   = gv('sl-dist');
+  const vel    = gv('sl-vel');
+  const acc    = gv('sl-acc');
+
+  const error = target - dist;
+  const P   = error * Kp;
+  const D   = vel   * Kd;
+  const A   = acc   * Ka;
+  const pd  = P + D;
+  const raw = pd + A;
+  const fan = Math.max(0, Math.min(1, raw));
+
+  st('v-target', target);
+  st('v-dist',   dist);
+  st('v-vel',    vel);
+  st('v-acc',    acc.toFixed(1));
+  st('pval',  P.toFixed(3));
+  st('dval',  D.toFixed(3));
+  st('aval',  A.toFixed(3));
+  st('pdval', pd.toFixed(3));
+  st('rawval',raw.toFixed(3));
+  st('v-clamp', fan.toFixed(2));
+  st('v-fan',   fan.toFixed(2));
+  document.getElementById('fan-bar').style.width = (fan*100).toFixed(1)+'%';
+}
+
+// Live-update constant display while editing (pre-launch only)
+function updateConstDisplay() {
+  const kp = parseFloat(document.getElementById('in-kp').value) || 0;
+  const kd = parseFloat(document.getElementById('in-kd').value) || 0;
+  const ka = parseFloat(document.getElementById('in-ka').value) || 0;
+  st('v-kp', kp.toFixed(4));
+  st('v-kd', kd.toFixed(3));
+  st('v-ka', ka.toFixed(3));
+}
+
+function launch() {
+  if (launched) return;
+  Kp = parseFloat(document.getElementById('in-kp').value) || 0.001;
+  Kd = parseFloat(document.getElementById('in-kd').value) || -0.15;
+  Ka = parseFloat(document.getElementById('in-ka').value) || -0.6;
+  launched = true;
+
+  // Lock inputs
+  ['in-kp','in-kd','in-ka'].forEach(id => {
+    document.getElementById(id).disabled = true;
+    document.getElementById(id).style.opacity = '0.4';
+  });
+  document.getElementById('btn-launch').textContent = '✓ LAUNCHED';
+  document.getElementById('btn-launch').style.color = '#00ff9d';
+  document.getElementById('btn-launch').style.opacity = '0.5';
+  document.getElementById('btn-launch').style.cursor = 'default';
+
+  update();
+}
+
+function reset() {
+  launched = false;
+  ['in-kp','in-kd','in-ka'].forEach(id => {
+    document.getElementById(id).disabled = false;
+    document.getElementById(id).style.opacity = '1';
+  });
+  document.getElementById('in-kp').value = '0.001';
+  document.getElementById('in-kd').value = '-0.15';
+  document.getElementById('in-ka').value = '-0.6';
+  document.getElementById('btn-launch').textContent = '▶ LAUNCH';
+  document.getElementById('btn-launch').style.opacity = '1';
+  document.getElementById('btn-launch').style.cursor = 'pointer';
+  updateConstDisplay();
+  update();
+}
+
+['sl-target','sl-dist','sl-vel','sl-acc'].forEach(id =>
+  document.getElementById(id).addEventListener('input', update)
+);
+['in-kp','in-kd','in-ka'].forEach(id =>
+  document.getElementById(id).addEventListener('input', updateConstDisplay)
+);
+
+// ── Wire helpers ─────────────────────────────────────────
+function rightOf(el) {
+  const c = document.getElementById('canvas').getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return { x: r.right - c.left, y: r.top - c.top + r.height/2 };
+}
+function leftOf(el) {
+  const c = document.getElementById('canvas').getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return { x: r.left - c.left, y: r.top - c.top + r.height/2 };
+}
+function botOf(el) {
+  const c = document.getElementById('canvas').getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return { x: r.left - c.left + r.width/2, y: r.bottom - c.top };
+}
+function topOf(el) {
+  const c = document.getElementById('canvas').getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  return { x: r.left - c.left + r.width/2, y: r.top - c.top };
+}
+
+function wire(svg, p1, p2, color, lbl) {
+  const mx = (p1.x + p2.x) / 2;
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', `M${p1.x},${p1.y} C${mx},${p1.y} ${mx},${p2.y} ${p2.x},${p2.y}`);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', '1.6');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('opacity', '0.6');
+  svg.appendChild(path);
+
+  [p1, p2].forEach(p => {
+    const ci = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    ci.setAttribute('cx', p.x); ci.setAttribute('cy', p.y); ci.setAttribute('r', 3);
+    ci.setAttribute('fill', color); ci.setAttribute('opacity','0.85');
+    svg.appendChild(ci);
+  });
+
+  if (lbl) {
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', mx);
+    t.setAttribute('y', Math.min(p1.y, p2.y) - 5);
+    t.setAttribute('fill', color);
+    t.setAttribute('font-size','9');
+    t.setAttribute('font-family','Share Tech Mono,monospace');
+    t.setAttribute('text-anchor','middle');
+    t.setAttribute('opacity','0.55');
+    t.textContent = lbl;
+    svg.appendChild(t);
+  }
+}
+
+function drawWires() {
+  const svg = document.getElementById('wires');
+  svg.innerHTML = '';
+
+  const bTarget = document.getElementById('b-target');
+  const bDist   = document.getElementById('b-dist');
+  const bVel    = document.getElementById('b-vel');
+  const bDiff   = document.getElementById('b-diff');
+  const bSub    = document.getElementById('b-sub');
+  const bMulP   = document.getElementById('b-mulp');
+  const bMulD   = document.getElementById('b-muld');
+  const bMulA   = document.getElementById('b-mula');
+  const bAdd1   = document.getElementById('b-add1');
+  const bAdd2   = document.getElementById('b-add2');
+  const bClamp  = document.getElementById('b-clamp');
+  const bFan    = document.getElementById('b-fan');
+
+  const C='#00c8ff', G='#00ff9d', O='#ff6b35', Y='#f0c040', P='#dd44ff', V='#a060e0', K='#e0a020';
+
+  // target → SUB (port A, top half)
+  wire(svg, rightOf(bTarget), { x: leftOf(bSub).x, y: leftOf(bSub).y - 13 }, G, 'target');
+  // dist → SUB (port B, bottom half)
+  wire(svg, rightOf(bDist),   { x: leftOf(bSub).x, y: leftOf(bSub).y + 13 }, C, 'dist');
+  // SUB → MUL_P
+  wire(svg, rightOf(bSub), leftOf(bMulP), Y, 'error');
+  // MUL_P → ADD1 (port A)
+  wire(svg, rightOf(bMulP), { x: leftOf(bAdd1).x, y: leftOf(bAdd1).y - 15 }, Y, 'P');
+  // vel → MUL_D (direct)
+  wire(svg, rightOf(bVel), leftOf(bMulD), C, 'vel');
+  // MUL_D → ADD1 (port B)
+  wire(svg, rightOf(bMulD), { x: leftOf(bAdd1).x, y: leftOf(bAdd1).y + 15 }, C, 'D');
+  // vel → DIFF (branch down)
+  wire(svg, botOf(bVel), topOf(bDiff), P, '');
+  // DIFF → MUL_A
+  wire(svg, rightOf(bDiff), leftOf(bMulA), P, 'accel');
+  // ADD1 → ADD2 (port A)
+  wire(svg, botOf(bAdd1), { x: leftOf(bAdd2).x, y: leftOf(bAdd2).y - 15 }, Y, 'P+D');
+  // MUL_A → ADD2 (port B)
+  wire(svg, rightOf(bMulA), { x: leftOf(bAdd2).x, y: leftOf(bAdd2).y + 15 }, P, 'A');
+  // ADD2 → CLAMP
+  wire(svg, rightOf(bAdd2), leftOf(bClamp), V, 'raw');
+  // CLAMP → FAN
+  wire(svg, botOf(bClamp), topOf(bFan), O, 'thrust');
+
+  // Kp → MUL_P (from above, dashed style via note)
+  drawConstWire(svg, bMulP, 'Kp', K);
+  drawConstWire(svg, bMulD, 'Kd', K);
+  drawConstWire(svg, bMulA, 'Ka', K);
+}
+
+function drawConstWire(svg, mulBrick, label, color) {
+  // draw a short stub coming into the top of the MUL brick to indicate constant input
+  const c  = document.getElementById('canvas').getBoundingClientRect();
+  const r  = mulBrick.getBoundingClientRect();
+  const x  = r.left - c.left + r.width * 0.75;
+  const y1 = r.top  - c.top - 26;
+  const y2 = r.top  - c.top;
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', `M${x},${y1} L${x},${y2}`);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width','1.4');
+  path.setAttribute('stroke-dasharray','4,3');
+  path.setAttribute('fill','none');
+  path.setAttribute('opacity','0.5');
+  svg.appendChild(path);
+
+  // arrowhead
+  ['M'+(x-4)+','+(y2-7),'L'+x+','+y2,'L'+(x+4)+','+(y2-7)].join(' ');
+  const arr = document.createElementNS('http://www.w3.org/2000/svg','path');
+  arr.setAttribute('d', `M${x-4},${y2-7} L${x},${y2} L${x+4},${y2-7}`);
+  arr.setAttribute('stroke', color); arr.setAttribute('stroke-width','1.4');
+  arr.setAttribute('fill','none'); arr.setAttribute('opacity','0.6');
+  svg.appendChild(arr);
+
+  // label box
+  const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x', x-14); rect.setAttribute('y', y1-14);
+  rect.setAttribute('width','28'); rect.setAttribute('height','14');
+  rect.setAttribute('rx','3'); rect.setAttribute('fill','#100e08');
+  rect.setAttribute('stroke', color); rect.setAttribute('stroke-width','0.8');
+  rect.setAttribute('opacity','0.85');
+  svg.appendChild(rect);
+
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x', x); t.setAttribute('y', y1-3);
+  t.setAttribute('fill', color); t.setAttribute('font-size','8.5');
+  t.setAttribute('font-family','Share Tech Mono,monospace');
+  t.setAttribute('text-anchor','middle'); t.setAttribute('opacity','0.9');
+  t.textContent = label;
+  svg.appendChild(t);
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => { drawWires(); update(); updateConstDisplay(); }, 100);
+});
+window.addEventListener('resize', drawWires);
+</script>
+</body>
+</html>
