@@ -1,12 +1,10 @@
-// Website
-
-// Hosted using pages configuration
+// Website (Hosted using pages configuration)
 
 resource "cloudflare_record" "www" {
     zone_id = "${var.zone_id}"
     name    = "www"
     content = "ethanbrews.me"
-    comment = "Redirect to non-www"
+    comment = "Serve same as non-www"
     type    = "CNAME"
     proxied = true
     ttl     = 1
@@ -18,7 +16,7 @@ resource "cloudflare_record" "vps_ipv4" {
   zone_id = "${var.zone_id}"
   name    = "vps"
   content = "188.34.200.221"
-  comment = "Linode VPS IPv4"
+  comment = "VPS IPv4"
   type    = "A"
   proxied = false
   ttl     = 1
@@ -28,19 +26,9 @@ resource "cloudflare_record" "vps_ipv6" {
   zone_id = "${var.zone_id}"
   name    = "vps"
   content = "2a01:4f8:1c1a:a0ba::1"
-  comment = "Linode VPS IPv6"
+  comment = "VPS IPv6"
   type    = "AAAA"
   proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "docker_registry" {
-  zone_id = "${var.zone_id}"
-  name    = "registry"
-  content = "vps.ethanbrews.me"
-  comment = "Docker registry"
-  type    = "CNAME"
-  proxied = true
   ttl     = 1
 }
 
@@ -74,55 +62,16 @@ resource "cloudflare_record" "headscale" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "mas" {
+resource "cloudflare_record" "trek" {
   zone_id = "${var.zone_id}"
-  name    = "mas"
+  name    = "trek"
   content = "vps.ethanbrews.me"
-  comment = "Element MAS"
+  comment = "Trek Trip Planner"
   type    = "CNAME"
-  proxied = false
+  proxied = true
   ttl     = 1
 }
 
-resource "cloudflare_record" "livekit" {
-  zone_id = "${var.zone_id}"
-  name    = "livekit"
-  content = "vps.ethanbrews.me"
-  comment = "Element LiveKit"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "call" {
-  zone_id = "${var.zone_id}"
-  name    = "call"
-  content = "vps.ethanbrews.me"
-  comment = "Element Call"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "matrix" {
-  zone_id = "${var.zone_id}"
-  name    = "matrix"
-  content = "vps.ethanbrews.me"
-  comment = "Element Matrix"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "home" {
-  zone_id = "${var.zone_id}"
-  name    = "home"
-  content = "vps.ethanbrews.me"
-  comment = "Brewsnet (headscale)"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
@@ -180,16 +129,6 @@ resource "cloudflare_record" "smtp2go_dkim" {
 }
 
 // Minecraft server
-
-resource "cloudflare_record" "minecraft_stone" {
-    zone_id = "${var.zone_id}"
-    name    = "stoneserver.ethanbrews.me"
-    content = "80.5.130.76"
-    comment = "James minecraft server"
-    type    = "A"
-    proxied = false
-    ttl     = 1
-}
 
 resource "cloudflare_record" "minecraft_main" {
     zone_id = "${var.zone_id}"
