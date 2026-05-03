@@ -42,16 +42,6 @@ resource "cloudflare_record" "auth" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "photos" {
-  zone_id = "${var.zone_id}"
-  name    = "photos"
-  content = "vps.ethanbrews.me"
-  comment = "Photo Share"
-  type    = "CNAME"
-  proxied = true
-  ttl     = 1
-}
-
 resource "cloudflare_record" "headscale" {
   zone_id = "${var.zone_id}"
   name    = "vpn"
@@ -59,16 +49,6 @@ resource "cloudflare_record" "headscale" {
   comment = "Brewsnet (headscale)"
   type    = "CNAME"
   proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "trek" {
-  zone_id = "${var.zone_id}"
-  name    = "trek"
-  content = "vps.ethanbrews.me"
-  comment = "Trek Trip Planner"
-  type    = "CNAME"
-  proxied = true
   ttl     = 1
 }
 
