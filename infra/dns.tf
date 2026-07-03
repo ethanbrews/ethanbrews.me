@@ -113,9 +113,9 @@ resource "cloudflare_record" "smtp2go_dkim" {
 resource "cloudflare_record" "minecraft_main" {
     zone_id = "${var.zone_id}"
     name    = "mc.ethanbrews.me"
-    content = "80.5.130.76"
+    content = "home.dyason.com"
     comment = "Main minecraft server"
-    type    = "A"
+    type    = "CNAME"
     proxied = false
     ttl     = 1
 }
