@@ -62,6 +62,16 @@ resource "cloudflare_record" "grafana" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "gateway" {
+  zone_id = "${var.zone_id}"
+  name    = "gateway"
+  content = "vps.ethanbrews.me"
+  comment = "Gateway (Caddy)"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
