@@ -52,6 +52,16 @@ resource "cloudflare_record" "headscale" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "grafana" {
+  zone_id = "${var.zone_id}"
+  name    = "grafana"
+  content = "vps.ethanbrews.me"
+  comment = "Grafana"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 // Mail
 
 resource "cloudflare_record" "outlook_autodiscover" {
