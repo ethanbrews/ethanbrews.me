@@ -62,6 +62,16 @@ resource "cloudflare_record" "grafana" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "prometheus" {
+  zone_id = "${var.zone_id}"
+  name    = "prometheus"
+  content = "vps.ethanbrews.me"
+  comment = "Prometheus"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 resource "cloudflare_record" "gateway" {
   zone_id = "${var.zone_id}"
   name    = "gateway"
