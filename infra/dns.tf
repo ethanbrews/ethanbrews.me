@@ -72,6 +72,16 @@ resource "cloudflare_record" "prometheus" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "files" {
+  zone_id = "${var.zone_id}"
+  name    = "files"
+  content = "vps.ethanbrews.me"
+  comment = "Prometheus"
+  type    = "CNAME"
+  proxied = true
+  ttl     = 1
+}
+
 resource "cloudflare_record" "mail-webhook" {
   zone_id = "${var.zone_id}"
   name    = "mail-webhook"
