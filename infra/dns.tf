@@ -85,8 +85,8 @@ resource "cloudflare_record" "prometheus" {
 resource "cloudflare_record" "files" {
   zone_id = "${var.zone_id}"
   name    = "files"
-  content = "nx110575.your-storageshare.de"
-  comment = "Hetzner Storage Share"
+  content = "vps.ethanbrews.me"
+  comment = "Public File Share"
   type    = "CNAME"
   proxied = true
   ttl     = 1
