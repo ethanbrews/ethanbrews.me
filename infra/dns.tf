@@ -42,16 +42,6 @@ resource "cloudflare_record" "auth" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "mc" {
-  zone_id = "${var.zone_id}"
-  name    = "mc"
-  content = "home.dyason.com"
-  comment = "Minecraft Server"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
 resource "cloudflare_record" "headscale" {
   zone_id = "${var.zone_id}"
   name    = "vpn"
@@ -170,7 +160,7 @@ resource "cloudflare_record" "smtp2go_dkim" {
 
 // Minecraft server
 
-resource "cloudflare_record" "minecraft_main" {
+resource "cloudflare_record" "minecraft" {
     zone_id = "${var.zone_id}"
     name    = "mc.ethanbrews.me"
     content = "home.dyason.com"
