@@ -74,6 +74,16 @@ resource "cloudflare_record" "mail-webhook" {
 
 // Mail
 
+resource "cloudflare_record" "mail" {
+  zone_id = "${var.zone_id}"
+  name    = "mail"
+  content = "witcher.mxrouting.net"
+  comment = "My email"
+  type    = "CNAME"
+  proxied = false
+  ttl     = 1
+}
+
 resource "cloudflare_record" "mxroute_witcher" {
     zone_id  = "${var.zone_id}"
     name     = "ethanbrews.me"
