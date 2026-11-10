@@ -52,26 +52,6 @@ resource "cloudflare_record" "headscale" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "grafana" {
-  zone_id = "${var.zone_id}"
-  name    = "grafana"
-  content = "vps.ethanbrews.me"
-  comment = "Grafana"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "prometheus" {
-  zone_id = "${var.zone_id}"
-  name    = "prometheus"
-  content = "vps.ethanbrews.me"
-  comment = "Prometheus"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
 resource "cloudflare_record" "files" {
   zone_id = "${var.zone_id}"
   name    = "files"
@@ -87,16 +67,6 @@ resource "cloudflare_record" "mail-webhook" {
   name    = "mail-webhook"
   content = "vps.ethanbrews.me"
   comment = "Microsoft graph mail webhook"
-  type    = "CNAME"
-  proxied = false
-  ttl     = 1
-}
-
-resource "cloudflare_record" "gateway" {
-  zone_id = "${var.zone_id}"
-  name    = "gateway"
-  content = "vps.ethanbrews.me"
-  comment = "Gateway (Caddy)"
   type    = "CNAME"
   proxied = false
   ttl     = 1
