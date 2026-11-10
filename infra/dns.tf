@@ -118,7 +118,7 @@ resource "cloudflare_record" "mxroute_spf" {
 
 resource "cloudflare_record" "mxroute_dkim" {
     zone_id = "${var.zone_id}"
-    name    = "ethanbrews.me"
+    name    = "x._domainkey"
     content = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAraU/Ah2ckML8COnOf4nnK8gHigJ4iBPs+Y3Fik2zezMFWAqVvaDZM1OofF57OvwSEdmL2ZwhV/7n26X+XbSHDU95YSj8zTwoxCry+FWsdfI9qUpOFbtr2hmcEYkNHzJ31H2YpzibpFwE/2epFeRjSlAAeHCoqNzDF2u/ZTLs62jiiI6XS+iSxVbS+5MrPK/W6eTXfMdVk/5JQJrVGmY78GsF8pAxDiA70PxtUe4RJDMkmztzOqtOasZgv/SlfGBx8faZML770cRojmeIN/M8LDdFPTmaWiPonGQEvJ4Hmmnyl1qpYbMUK0pzZSozO1JJDqZNwHc/tzzQHfhDEezFxwIDAQAB"
     comment = "MXRoute DKIM"
     type    = "TXT"
