@@ -104,36 +104,26 @@ resource "cloudflare_record" "gateway" {
 
 // Mail
 
-resource "cloudflare_record" "outlook_autodiscover" {
-    zone_id = "${var.zone_id}"
-    name    = "autodiscover"
-    content = "autodiscover.outlook.com"
-    comment = "Exchange Online Server"
-    type    = "CNAME"
-    proxied = false
-    ttl     = 1
+resource "cloudflare_record" "mxroute_witcher" {
+    zone_id  = "${var.zone_id}"
+    name     = "ethanbrews.me"
+    content  = "witcher.mxrouting.net"
+    comment  = "MX Route Email"
+    type     = "MX"
+    proxied  = false
+    ttl      = 1
+    priority = 10
 }
 
-resource "cloudflare_record" "outlook_mail_protect" {
-    zone_id = "${var.zone_id}"
-    name    = "ethanbrews.me"
-    content = "ethanbrews-me.mail.protection.outlook.com"
-    comment = "Exchange Online Server"
-    type    = "MX"
-    proxied = false
-    ttl     = 1
-}
-
-// Domain Verification
-
-resource "cloudflare_record" "microsoft_verify" {
-    zone_id = "${var.zone_id}"
-    name    = "ethanbrews.me"
-    content = "MS=3D721FE97631AD845F458405F81F8E550EABCE0D"
-    comment = "Exchange Online Server"
-    type    = "TXT"
-    proxied = false
-    ttl     = 1
+resource "cloudflare_record" "mxroute_witcher_relay" {
+    zone_id  = "${var.zone_id}"
+    name     = "ethanbrews.me"
+    content  = "witcher-relay.mxrouting.net"
+    comment  = "MX Route Email"
+    type     = "MX"
+    proxied  = false
+    ttl      = 1
+    priority = 20
 }
 
 resource "cloudflare_record" "mxroute_verify" {
@@ -141,6 +131,26 @@ resource "cloudflare_record" "mxroute_verify" {
     name    = "_da-verify-0a4c2b0ff462e427fd6f227c5e5f9151"
     content = "domain-verified"
     comment = "MXRoute Verification"
+    type    = "TXT"
+    proxied = false
+    ttl     = 1
+}
+
+resource "cloudflare_record" "mxroute_spf" {
+    zone_id = "${var.zone_id}"
+    name    = "ethanbrews.me"
+    content = "v=spf1 include:mxroute.com -all"
+    comment = "MXRoute SPF"
+    type    = "TXT"
+    proxied = false
+    ttl     = 1
+}
+
+resource "cloudflare_record" "mxroute_dkim" {
+    zone_id = "${var.zone_id}"
+    name    = "ethanbrews.me"
+    content = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAraU/Ah2ckML8COnOf4nnK8gHigJ4iBPs+Y3Fik2zezMFWAqVvaDZM1OofF57OvwSEdmL2ZwhV/7n26X+XbSHDU95YSj8zTwoxCry+FWsdfI9qUpOFbtr2hmcEYkNHzJ31H2YpzibpFwE/2epFeRjSlAAeHCoqNzDF2u/ZTLs62jiiI6XS+iSxVbS+5MrPK/W6eTXfMdVk/5JQJrVGmY78GsF8pAxDiA70PxtUe4RJDMkmztzOqtOasZgv/SlfGBx8faZML770cRojmeIN/M8LDdFPTmaWiPonGQEvJ4Hmmnyl1qpYbMUK0pzZSozO1JJDqZNwHc/tzzQHfhDEezFxwIDAQAB"
+    comment = "MXRoute DKIM"
     type    = "TXT"
     proxied = false
     ttl     = 1
