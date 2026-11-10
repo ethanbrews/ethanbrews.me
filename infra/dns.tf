@@ -189,3 +189,29 @@ resource "cloudflare_record" "minecraft" {
     proxied = false
     ttl     = 1
 }
+
+
+
+removed {
+  from = cloudflare_record.microsoft_verify
+
+  lifecycle {
+    destroy = true
+  }
+}
+
+removed {
+  from = cloudflare_record.outlook_autodiscover
+
+  lifecycle {
+    destroy = true
+  }
+}
+
+removed {
+  from = cloudflare_record.outlook_mail_protect
+
+  lifecycle {
+    destroy = true
+  }
+}
