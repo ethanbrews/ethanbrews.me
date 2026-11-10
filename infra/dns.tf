@@ -136,6 +136,16 @@ resource "cloudflare_record" "microsoft_verify" {
     ttl     = 1
 }
 
+resource "cloudflare_record" "mxroute_verify" {
+    zone_id = "${var.zone_id}"
+    name    = "_da-verify-0a4c2b0ff462e427fd6f227c5e5f9151"
+    content = "domain-verified"
+    comment = "MXRoute Verification"
+    type    = "TXT"
+    proxied = false
+    ttl     = 1
+}
+
 // SMTP2GO
 
 resource "cloudflare_record" "smtp2go_return" {
